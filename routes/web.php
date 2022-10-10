@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,20 +30,8 @@ Route::get('/search', function (Request $req) {
     return response('Name :' . $req->name);
 });
 
-Route::get('/', function () {
-    return view('lists', ['lists' => Listing::all()]);
-});
+Route::get('/', [ListingController::class, 'index']);
 
 //Single List
 
-Route::get('/lists/{id}', function ($id) {
-    $list = Listing::find($id);
-    if($list){
-        return view('list', [
-            'list' => $list
-        ]);
-    }
-    else{
-        abort('404');
-    }
-});
+Route::get('/lists/{list}', [ListingController::class, 'show']);
