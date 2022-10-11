@@ -21,6 +21,9 @@ Route::get('/', [ListingController::class, 'index']);
 //create form
 Route::get('/lists/create', [ListingController::class, 'create']);
 
+//store form data
+Route::post('/lists', [ListingController::class, 'store']);
+
 
 //Single List
 

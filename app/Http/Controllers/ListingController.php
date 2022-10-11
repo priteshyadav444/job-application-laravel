@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule as ValidationRule;
 
 class ListingController extends Controller
 {
@@ -28,9 +30,27 @@ class ListingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+       // dd($request);
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => ['required', ValidationRule::unique('listings', 'company')],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+      //  $formFields['user_id'] = auth()->id();
+
+        Listing::create($formFields);
+
+        return redirect('/')->with('message', 'Listing created successfully!');
     }
 
     /**
