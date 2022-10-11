@@ -14,7 +14,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        return view('lists', ['lists' => Listing::all()]);
+        return view('list.index', ['lists' => Listing::all()]);
     }
 
     /**
@@ -44,9 +44,11 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Listing $list)
     {
-        //
+        return view('list.show', [
+            'list' => $list
+        ]);
     }
 
     /**
