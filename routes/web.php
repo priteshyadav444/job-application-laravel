@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ListingController::class, 'index']);
 
+//create form
+Route::get('/lists/create', [ListingController::class, 'create']);
+
+
 //Single List
 
 Route::get('/lists/{list}', [ListingController::class, 'show']);
+
