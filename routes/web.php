@@ -16,20 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-Route::get('hello', function () {
-    return response("Hallo World", 201)->header('Content-Type', 'text/json');
-});
-
-Route::get('/post/{id}', function ($id) {
-    return response('Post Id ' . $id, '200');
-});
-
-Route::get('/search', function (Request $req) {
-    return response('Name :' . $req->name);
-});
-
 Route::get('/', [ListingController::class, 'index']);
 
 //Single List
