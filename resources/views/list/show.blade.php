@@ -1,6 +1,6 @@
 <x-layout>
 @include('partials._search')
-<a href="index.html" class="inline-block text-black ml-4 mb-4"
+<a href="/" class="inline-block text-black ml-4 mb-4"
 ><i class="fa-solid fa-arrow-left"></i> Back
 </a>
 <div class="mx-4">
@@ -29,7 +29,7 @@
                 {{$list->description}}
 
                 <a
-                    href="{{$list->email}}"
+                    href="mailto:{{$list->email}}"
                     class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"
                     ><i class="fa-solid fa-envelope"></i>
                     Contact Employer</a
