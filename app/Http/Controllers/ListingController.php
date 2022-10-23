@@ -16,7 +16,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        return view('list.index', ['lists' => Listing::latest()->filter(request(['tag','search']))->get()]);
+        return view('list.index', ['lists' => Listing::latest()->filter(request(['tag', 'search']))->paginate(6)]);
     }
 
     public function create()
@@ -30,8 +30,9 @@ class ListingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-       // dd($request);
+    public function store(Request $request)
+    {
+        // dd($request);
         $formFields = $request->validate([
             'title' => 'required',
             'company' => ['required', ValidationRule::unique('listings', 'company')],
@@ -42,14 +43,14 @@ class ListingController extends Controller
             'description' => 'required'
         ]);
 
-        if($request->hasFile('logo')) {
+        if ($request->hasFile('logo')) {
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
-      //  $formFields['user_id'] = auth()->id();
+        //  $formFields['user_id'] = auth()->id();
 
         Listing::create($formFields);
-
+        
         return redirect('/')->with('message', 'Listing created successfully!');
     }
 
@@ -59,10 +60,12 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Listing $list){
-          return view('list.show', [
+    public function show(Listing $list)
+    {
+        return view('list.show', [
             'list' => $list
-        ]);   }
+        ]);
+    }
 
     /**
      * Show the form for editing the specified resource.

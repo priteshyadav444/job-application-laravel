@@ -11,4 +11,7 @@
     <h2>No List Found</h2>
     @endif
 </div>
+<div class="mt-6 p-4">
+    {{$lists->links()}}
+  </div>
 </x-layout>
