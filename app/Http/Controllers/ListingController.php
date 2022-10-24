@@ -73,9 +73,10 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Listing $list)
     {
-        //
+        // dd($list->title);
+        return view('list.edit', ['list'=>$list]);
     }
 
     /**
@@ -85,9 +86,25 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Listing $list)
     {
-        //
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => ['required'],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        $list->update($formFields);
+
+        return back()->with('message', 'Listing updated successfully!');
     }
 
     /**
@@ -96,8 +113,13 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Listing $list) {
+        // Make sure logged in user is owner
+        // if($list->user_id != auth()->id()) {
+        //     abort(403, 'Unauthorized Action');
+        // }
+        
+        $list->delete();
+        return redirect('/')->with('message', 'Listing deleted successfully');
     }
 }
