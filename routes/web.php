@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ListingController::class, 'index']);
 
 //create form
-Route::get('/lists/create', [ListingController::class, 'create']);
+Route::get('/lists/create', [ListingController::class, 'create'])->middleware('auth');
 
 //store form data
 Route::post('/lists', [ListingController::class, 'store']);
