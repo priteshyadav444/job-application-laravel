@@ -76,6 +76,9 @@ class ListingController extends Controller
     public function edit(Listing $list)
     {
         // dd($list->title);
+        if($list->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
         return view('list.edit', ['list'=>$list]);
     }
 
@@ -88,6 +91,10 @@ class ListingController extends Controller
      */
     public function update(Request $request, Listing $list)
     {
+        if($list->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
+
         $formFields = $request->validate([
             'title' => 'required',
             'company' => ['required'],
@@ -114,12 +121,16 @@ class ListingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Listing $list) {
-        // Make sure logged in user is owner
-        // if($list->user_id != auth()->id()) {
-        //     abort(403, 'Unauthorized Action');
-        // }
+       
+        if($list->user_id != auth()->id()) {
+            abort(403, 'Unauthorized Action');
+        }
         
         $list->delete();
         return redirect('/')->with('message', 'Listing deleted successfully');
+    }
+
+    public function manage() {
+        return view('list.manage', ['list' => auth()->user()->lists()->get()]);
     }
 }
