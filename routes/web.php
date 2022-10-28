@@ -28,15 +28,19 @@ Route::post('/lists', [ListingController::class, 'store'])->middleware('auth');;
 //Show Edit
 Route::get('/lists/{list}/edit', [ListingController::class, 'edit'])->middleware('auth');;
 
+//update 
+Route::put('/lists/{list}', [ListingController::class, 'update'])->middleware('auth');;
+
+
 //Single List
 Route::get('/lists/{list}', [ListingController::class, 'show']);
 
-//update 
-Route::put('/lists/{list}', [ListingController::class, 'update'])->middleware('auth');;
 
 // delete 
 Route::delete('/lists/{list}', [ListingController::class, 'destroy'])->middleware('auth');;
 
+// Manage Listings
+Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
 
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');;
 
