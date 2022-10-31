@@ -13,14 +13,7 @@
             <div class="text-lg mt-4">
                 <i class="fa-solid fa-location-dot"></i> {{$list->location}}
             </div>
-            <a href="/lists/{{$list->id}}/edit">
-                <i class="fa-solid fa-pencil"></i> Edit
-              </a>
-              <form method="POST" action="/lists/{{$list->id}}">
-          @csrf
-          @method('DELETE')
-          <button class="text-red-500"><i class="fa-solid fa-trash"></i> Delete</button>
-        </form>
+           
         </div>
     </div>
 </x-card>
